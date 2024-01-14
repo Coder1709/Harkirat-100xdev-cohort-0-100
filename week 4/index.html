@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function Answer(){
+        let first = document.getElementById('first').value;
+        let second = document.getElementById('Second').value;
+        let answer = parseInt(first) + parseInt(second);
+        document.getElementById('finalAnswer').innerHTML = answer;
+        
+    }
+</script>
+    <input type="text" placeholder="Enter your First Number " id="first"></input>
+    <br></br>
+    <input type="text" placeholder="Enter your Second Number " id = 'Second'></input>
+    <br></br>
+    <button onclick="Answer()">Calculate</button>
+    <br></br>
+    <div id="finalAnswer"></div>
+    
+</body>
+</html>
