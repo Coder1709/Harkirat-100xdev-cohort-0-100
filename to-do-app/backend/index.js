@@ -1,16 +1,17 @@
+const todo = require("./db");
 const { createTodo, updateTodo  } = require("./types");
 
 const express = use ("express");
 
 
-//creatng the express app
+//creating the express app
 const app = express();
 //middle ware
 app.use(express.json());
 
 //routes
 
-app.post("/todo" ,(req,res)=> {
+app.post("/todo" ,async(req,res)=> {
 
     const createPayload = req.body;
 
@@ -24,6 +25,15 @@ app.post("/todo" ,(req,res)=> {
         return;
     }
     //put in mongodb
+    await todo.create( {
+        title: todo.createPayload.title,
+        description: todo.createPayload.description,
+        completed: false,
+    })
+
+    res.json({
+        message:"todo created successfully",
+    });
 
 
 
@@ -31,13 +41,18 @@ app.post("/todo" ,(req,res)=> {
 
 })
 
-app.get("/todo" ,(req,res)=> {
+app.get("/todos" ,async(req,res)=> {
+    const data = await todo.find();
+
+    res.json({
+        data,
+    })
 
 
 })
 
 
-app.put("/completed" ,(req,res)=> {
+app.put("/completed" ,async(req,res)=> {
     const completedId = req.body.id;
 
     const parseCompletedId = updateTodo.safeParse(completedId);
@@ -51,6 +66,17 @@ app.put("/completed" ,(req,res)=> {
     }
 
     //put in mongodb
+
+    await todo.update( {
+        _id:req.body.id,
+    } , {
+        completed:true,
+    } )
+
+    res.json({
+        message:"todo marked as completed",
+    });
+    
 
 
 
